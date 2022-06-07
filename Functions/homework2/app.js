@@ -6,7 +6,7 @@ function f(arr){
         throw new Error("parameter cant be an empty")
     }
     for(let i = 0; i < arr.length; i++){
-        if(typeof arr[i] !== "number"){
+        if(!arr.every(value => typeof value === 'number')){
             throw new Error("parameter type should be array of numbers")
         }
         console.log(arr[i])        
@@ -14,7 +14,7 @@ function f(arr){
     
 }
 try{
-    console.log(f([1, 9, 20, 8000]))
+    f([1000, 2000, 7000, 10000, 20000])
 }catch(err){
     console.log(err.message)
 }
