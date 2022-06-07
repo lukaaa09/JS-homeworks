@@ -4,17 +4,16 @@ function f(arr){
     }    
     else if(arr.length <= 0){
         throw new Error("parameter cant be an empty")
+    }else if(!arr.every(value => typeof value === 'number')){
+        throw new Error("parameter type should be array of numbers")
     }
     for(let i = 0; i < arr.length; i++){
-        if(!arr.every(value => typeof value === 'number')){
-            throw new Error("parameter type should be array of numbers")
-        }
-        console.log(arr[i])        
+            console.log(arr[i])        
     }
     
 }
 try{
-    f([1000, 2000, 7000, 10000, 20000])
+    f([1000, 2000, 3500, 7800, 9000])
 }catch(err){
     console.log(err.message)
 }
