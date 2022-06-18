@@ -3,19 +3,19 @@ let mix =(...args) => {
         throw new Error("every parameter should be a callback")
     }
     let callback = args[0]
-    let firstElement = callback()
+    let result = callback()
     for(let i = 1; i < args.length; i++){
         let element = args[i]
-        firstElement =  element(firstElement)
+        result =  element(result)
     }
-    return firstElement
+    return result
 }
-const result = mix(
-  () => 0,
-  (prev) => prev + 1,
-  (prev) => prev + 2,
-  (prev) => prev + 12,
-  (prev) => prev + 2
+console.log(mix(
+    () => 0,
+    (prev) => prev + 1,
+    (prev) => prev + 2,
+    (prev) => prev + 12,
+    (prev) => prev + 2
+  
+)) 
 
-);
-console.log(result)

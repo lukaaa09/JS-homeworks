@@ -1,27 +1,23 @@
 function mix(...args){
-    if(!args.every(value => typeof value === 'function')){
-        throw new Error("every parameter should be a callback")
-    }
-    let errors = []
-    let callback = args[0]
-    let firstElement = callback()
-    for(let i = 1; i < args.length; i++){
-        let element = args[i];
-        try {
-            firstElement =  element(firstElement)
-        } catch (error) {
-            errors.push(
-                {
-                    name: error.name,
-                    message: error.message,
-                    stack: error.stack,
-                    level: i
-                }
-            )
+    let result1 = {value: null, errors: []} 
+    args.forEach((cb, i) => {
+        if(typeof cb !== 'function'){
+            throw new Error("every parameter should be a callback")
+        }try{
+            result1.value = cb(result1.value);
+        }catch(err){
+            result1.errors.push({
+                name: err.name,
+                stack: err.stack,
+                message: err.message,
+                level: i,
+            })
         }
-    }
-    return {errors, firstElement}
+        
+    }) 
+    return result1
 }
+        
 const result = mix(() => {
     return 0;
 }, (prev) => {
