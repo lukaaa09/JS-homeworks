@@ -37,31 +37,38 @@ class DB {
 
     }
 
-    readAll(...args) {
-        if (args.length === 0) {
-            return this.map.values();
-        }
-        else {
-            throw new Error;
-        }
+    readAll(){
+        if(arguments.length > 0) throw new Error('readAll method has an unnecesarry parameter')
+        let fullArr = []
+        this.map.forEach((value, key) => {
+            fullArr.push({
+                id: key,
+                ...value
+            })
+        })
+        return fullArr
     }
 
-    update(id, updateObj) {
-        if (typeof id !== 'string') {
-            throw new TypeError("first parameter should be a string")
-        }
-        if (!this.map.has(id)) {
-            throw new Error("non existing user!")
-        }
-        if (typeof updateObj !== "object") {
-            throw new Error("second parameter should be a string")
-        }
-        Object.assign(this.map.get(id), updateObj)
+    update(id, obj){
+        if(arguments.length !== 2) throw new Error('need to provide 2 arguments')
+        if(typeof id !== 'string') throw new Error('update method id argument isnt string')
+        if(!this.map.has(id)) throw new Error('no item with this id to update')
+        if(typeof obj !== 'object') throw new Error('2nd argument is not an object')
+
+        let keyArr = Object.getOwnPropertyNames(obj)
+        
+        keyArr.forEach(key => {
+            if(!this.dataBase.get(id).hasOwnProperty(key)) throw new Error('not a valid object passed as argument')
+        })
+        
+        let updatedUser = {...this.map.get(id), ...obj}
+        this.validateObj(updatedUser)
+        this.map.set(id, updatedUser)
     }
 
     delete(id) {
-        if (!this.map.get(updateObj.id)) {
-            throw new Error("err");
+        if (!this.map.get(Obj.id)) {
+            throw new Error("warning message");
         } else {
             this.map.delete(id);
             return true;
@@ -70,5 +77,3 @@ class DB {
 }
 
 const db = new DB();
-
-
