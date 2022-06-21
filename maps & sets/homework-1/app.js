@@ -58,7 +58,7 @@ class DB {
         let keyArr = Object.getOwnPropertyNames(obj)
         
         keyArr.forEach(key => {
-            if(!this.dataBase.get(id).hasOwnProperty(key)) throw new Error('not a valid object passed as argument')
+            if(!this.map.get(id).hasOwnProperty(key)) throw new Error('not a valid object passed as argument')
         })
         
         let updatedUser = {...this.map.get(id), ...obj}
