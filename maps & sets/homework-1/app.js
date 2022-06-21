@@ -49,23 +49,18 @@ class DB {
         return fullArr
     }
 
-    update(id, obj){
-        if(arguments.length !== 2) throw new Error('need to provide 2 arguments')
-        if(typeof id !== 'string') throw new Error('update method id argument isnt string')
-        if(!this.map.has(id)) throw new Error('no item with this id to update')
-        if(typeof obj !== 'object') throw new Error('2nd argument is not an object')
-
-        let keyArr = Object.getOwnPropertyNames(obj)
-        
-        keyArr.forEach(key => {
-            if(!this.map.get(id).hasOwnProperty(key)) throw new Error('not a valid object passed as argument')
-        })
-        
-        let updatedUser = {...this.map.get(id), ...obj}
-        this.validateObj(updatedUser)
-        this.map.set(id, updatedUser)
+    update(id, Obj) {
+        if (typeof id !== 'string') {
+            throw new TypeError("first parameter should be a string")
+        }
+        if (!this.map.has(id)) {
+            throw new Error("non existing user!")
+        }
+        if (typeof Obj !== "object") {
+            throw new Error("second parameter should be a string")
+        }
+        Object.assign(this.map.get(id), Obj)
     }
-
     delete(id) {
         if (!this.map.get(Obj.id)) {
             throw new Error("warning message");
